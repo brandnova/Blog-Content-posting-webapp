@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block content %}
+<div class="section-header mt-5">
+    <span>{{title}}</span>
+    <h2>{{title}}</h2>
+</div>
+
+
+<div class="container">
+    {% for terms in terms %}
+        <p>{{ terms.title }}</p>
+        <!-- <p>{{ terms.image }}</p> -->
+        <img src="
+        {% if terms.img %}
+            {{ terms.image.url }}
+        {% else %}
+            #
+        {% endif %}
+        " alt="">
+        <p>{{ terms.content|safe }}</p>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

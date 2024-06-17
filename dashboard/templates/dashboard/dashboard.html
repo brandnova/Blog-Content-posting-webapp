@@ -1,0 +1,82 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+    <span>{{title}}</span>
+    <h2>{{title}}</h2>
+</div>
+
+<div class="row gy-4 p-5">
+          
+    {% if itemss %}
+      {% for item in itemss %}
+
+          <div class="col-lg-4 col-md-6 " data-aos="fade-up" data-aos-delay="100">
+              <div class="card rounded" style="border-radius: 15px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+              ">
+                <div class="card-img">
+                  <img src="{{ item.image.url }}" alt="" class="img-fluid">
+                </div>
+                <h3><a href="{% url 'items:detail' item.id %}" class="stretched-link p-3 text-center">{{ item.name }}</a></h3>
+                <p class="p-3">{{ item.description }}</p>
+              </div>
+          </div>
+
+      {% endfor %}
+    {% else %}
+          <h2 class="text-center">You Have Made No Uploads, Click <a class="" href="{% url 'items:new' %}">Here</a> To Create A Post.</h2>
+    {% endif %}
+    <!-- End Service Item -->
+    <div class="d-flex" style="flex-direction: column;">
+    
+      {% if itemss %}
+      <button type="button" class="btn btn-primary my-1">
+        Number of Pages <span class="badge text-bg-success bg-opacity-75">{{ itemss.paginator.num_pages }}</span>
+      </button>
+      <br>
+      <button type="button" class="btn btn-primary">
+        Number of Posts <span class="badge text-bg-success bg-opacity-75">{{ items|length }}</span>
+      </button>
+      {% else %}
+      <button type="button" class="btn btn-primary">
+        Number of Posts <span class="badge text-bg-success bg-opacity-75">{{ items|length }}</span>
+      </button>
+      <br>
+      {% endif %}
+      <br>
+      <hr>
+      <br/>
+    </div>
+
+    {% if itemss %}
+
+    <div class="justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+        {% if itemss.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ itemss.previous_page_number }}">Prev</a></li>
+        {% endif %}
+  
+          <li class="page-item"><a class="page-link" href="#">Page {{ itemss.number }}</a></li>
+        {% if itemss.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ itemss.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ itemss.paginator.num_pages }}">Last &raquo</a></li>
+        {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    {% else %}
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

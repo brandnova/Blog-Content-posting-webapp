@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+    All Quotes
+{% endblock %}
+
+{% block content %}
+
+
+    <section id="featured-services" class="featured-services">
+        <div class="container">
+
+            <div class="section-header">
+                <span>{{ title }}</span>
+                <h2>{{ title }}</h2>
+
+            </div>
+
+            <ul class="list-group m-5">
+                <li class="list-group-item d-flex justify-content-center align-items-center text-center">
+                    <span class="rounded"><h3>Categories</h3></span>
+                </li>
+                
+                {% for category in categories %}
+                <a href="{% url 'items:items' %}?query={{ query }}&category={{ category.id }}">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        See More in {{ category.name }}
+                    <span class="badge bg-primary rounded-pill">
+                        {% if category.item_count > 99 %}
+                            99+
+                        {% else %}
+                            {{ category.item_count }}
+                        {% endif %}
+                    </span>
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+
+            <div class="row gy-4">
+            
+                {% if items %}
+                    {% for item in items %}
+
+                        <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up">
+                        <div class="icon flex-shrink-0">
+                            <img src="{{ item.image.url }}" class="testimonial-img rounded" alt="" style="height: 60px; width: 60px; border: 1px solid #001973; box-shadow: 0px 0px 10px #001973;">
+                        </div>
+                        <div>
+                            <h4 class="title">{{ item.name }}</h4>
+                            <p class="description">{{ item.description }}</p>
+                            <i> <b>Posted By: </b> {{ item.created_by.username }}</i>
+                            <a href="{% url 'items:detail' item.id %}" class="readmore stretched-link"><span>Posted At: </span><i>{{ item.created_at }}</i></a>
+                        </div>
+                        </div>
+
+                    {% endfor %}
+                {% else %}
+                    <p>No items in this category.</p>
+                {% endif %}
+                    <!-- End Service Item -->
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}

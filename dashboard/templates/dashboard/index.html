@@ -1,0 +1,145 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<aside>
+  <div class="mx-1">
+    <a
+      class="nav-link nav-icon msgsi"
+    >
+      <i class="bi bi-chat-left-text"></i>
+      <span class="badge bg-success badge-number">{{ info|length }}</span> </a
+    ><!-- End Messages Icon -->
+  
+    <div class="z-3 position-absolute p-5 rounded-3 d-flex msgs d-none">
+      <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px" style=" height: auto;" data-bs-theme="light">
+        <li><small class="text-muted">You have {{ info|length }} new messages</small></l>
+        <li><hr class="dropdown-divider"></li>
+        {% for info in info %}
+          <li>
+            <a class="dropdown-item rounded-2" href="{% url 'dashboard:info' info.id %}">
+              {% comment %} {% url 'info' message.id %} {% endcomment %}
+              <b>{{ info.title }}</b>
+              <p style=" width: 200px; overflow-x: hidden;">{{ info.content }}</p>
+              <small class="text-muted">{{ info.date }}</small>
+            </a>
+          <li><hr class="dropdown-divider"></li>
+          </li>
+        {% endfor %}
+        
+        <li><a class="dropdown-item rounded-2 active text-dark text-center" href="{% url 'dashboard:allinfo' %}"><small class="text-muted">View all messages</small></a></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+<div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert">
+    <strong>Welcome!</strong> {{ username }}. 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<section class="dash py-0" style=" width: auto; background-color: white; margin:20px 0; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); border-radius:15px;">
+    <div class="container">
+        <div class="row gy-4 mt-4 mb-4 p-3" style=" border-radius: 10px;">
+    
+          <div class="col-xl-3 col-md-6 d-flex rounded" data-aos="zoom-out" style="">
+            <div class="service-item position-relative">
+                <div class="carddd p-2" style="height:100%; border: 2px solid #0D6EFD; border-radius: 15px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+                    <div class="icon"><i class="bi bi-activity iconss px-3 py-1 text-light"></i></div>
+                    <h4 class="my-2"><a href="" class="stretched-link">Your Uploads </a><small> {{ items|length }}</small></h4>
+                    <p class="text-dark">Track and manage your contributions, enhancing our community with each shared item.</p>
+                    
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+    
+          <div class="col-xl-3 col-md-6 d-flex rounded" data-aos="zoom-out" style="">
+            <div class="service-item position-relative">
+                <div class="carddd p-2" style="height:100%; border: 2px solid #0D6EFD; border-radius: 15px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+                    <div class="icon"><i class="bi bi-hand-thumbs-up iconss px-3 py-1 text-light"></i></div>
+                    <h4 class="my-2"><a href="" class="stretched-link">Interactions</a><small>
+                      {% if comment|length > 99 %}
+                        99+
+                      {% else %}
+                        {{ comment|length }}
+                      {% endif %}
+
+                    </small></h4>
+                    <p>Total number of interactions, including likes and comments. Stay engaged with the community.</p>
+                    
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+    
+          <div class="col-xl-3 col-md-6 d-flex rounded" data-aos="zoom-out" style="">
+            <div class="service-item position-relative">
+                <div class="carddd p-2" style="height:100%; border: 2px solid #0D6EFD; border-radius: 15px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+                    <div class="icon"><i class="bi bi-calendar4-week iconss px-3 py-1 text-light"></i></div>
+                    <h4 class="my-2"><a href="" class="stretched-link">Reach-Outs</a><small> {{ mess|length }}</small></h4>
+                    <p>Number of messages sent to the admin from the message us form on the contact page.</p>
+                    
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+    
+          <div class="col-xl-3 col-md-6 d-flex rounded" data-aos="zoom-out" style="">
+            <div class="service-item position-relative">
+                <div class="carddd p-2" style="height:100%; border: 2px solid #0D6EFD; border-radius: 15px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+                    <div class="icon"><i class="bi bi-broadcast iconss px-3 py-1 text-light"></i></div>
+                    <h4 class="my-2"><a href="" class="stretched-link">Nemo Enim</a><small></small></h4>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    
+                </div>
+            </div>
+          </div><!-- End Service Item -->
+    
+        </div>
+
+        <hr>
+
+        <div class="section-header">
+          <h2>Events</h2>
+        </div>
+        
+        <div class="row">
+
+          {% if events %}
+            {% for events in events %}
+              <div class="col-lg-6">
+                
+                <div class="card m-3">
+                  <img src="{{ events.image.url }}" class="card-img-top" alt="image">
+                  <div class="card-img-overlay bg-light bg-opacity-75 text-center">
+                    <h5 class="card-title">{{ events.title }}</h5>
+                    <small><b>Duration:</b> {{ events.duration }}</small><br>
+                    <small><b>Starts -</b> {{ events.start_date }}</small>
+                    <small><b>Ends -</b> {{ events.end_date }}</small>
+                    <p class="card-text mt-3">{{ events.description }}</p>
+
+                  </div>
+                </div>
+
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-center p-3">
+              <p>
+                There are currently no events available.
+              </p>
+            </div>
+          {% endif %}
+  
+        </div>
+        
+    </div>
+</section>
+
+<section class="dash py-0" style=" width: auto; background-color: white; margin:20px 0; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); border-radius:15px;">
+  
+</section>
+
+
+{% endblock %}

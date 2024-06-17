@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}Privacy Policy{% endblock %}
+
+{% block content %}
+<div class="section-header mt-5">
+    <span>{{title}}</span>
+    <h2>{{title}}</h2>
+</div>
+
+
+<div class="container">
+    {% for privacy in privacy %}
+        <p>{{ privacy.title }}</p>
+        <!-- <p>{{ privacy.image }}</p> -->
+        <img src="
+        {% if privacy.image %}
+            {{ privacy.image.url }}
+        {% else %}
+            #
+        {% endif %}
+        " alt="">
+        <p>{{ privacy.content|safe }}</p>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

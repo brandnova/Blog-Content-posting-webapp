@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+
+{% block content %}
+    <div class="section-header">
+        <span>{{title}}</span>
+        <h2>{{title}}</h2>
+    </div>
+    
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="">
+            {{ form.media }}
+            {{ form.as_p }}
+        </div>
+        {% if form.errors or form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show p-2" role="alert">
+            <p class="text-center" style="list-style:none;">
+                {% for field in form %}
+                    <p>
+                      {{ field.errors }}
+                    </p>
+                {% endfor %}
+                {{ form.non_field_errors }}
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-end pt-1 mb-4">
+        <button class="btn btn-primary btn-rounded" type="submit" style="background-color: #92aad0;">Submit</button>
+        </div>
+    </form>
+
+{% endblock %}
