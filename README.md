@@ -1,5 +1,5 @@
 # Blog-Content-posting-webapp
-An online platform where users can opst contents and access resources
+An online platform where users can post contents and access resources
 
 # Django Installation and Setup Guide (Offline)
 
