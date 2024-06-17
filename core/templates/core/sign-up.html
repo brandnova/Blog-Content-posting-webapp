@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Membership{% endblock %}
+
+{% block content %}
+
+  <main id="main" class="main">
+
+    <!-- ======= Get a Quote Section ======= -->
+    <section id="get-a-quote" class="get-a-quote p-5 d-flex">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row g-0 p-3 rounded mem">
+
+          {% if form.errors or form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show p-2" role="alert">
+            <p class="text-center" style="list-style:none;">
+                {% for field in form %}
+                    <p>
+                      {{ field.errors }}
+                    </p>
+                {% endfor %}
+                {{ form.non_field_errors }}
+            </p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endif %}
+          
+          <div class="bg-image h-100 my-5">
+              <div class="container">
+                <div class="row d-flex justify-content-center align-items-center">
+                  <div class="col-12 col-lg-9 col-xl-8">
+                    <div class="card" style="border-radius: 1rem;">
+                      <div class="row g-0">
+                        <div class="col-md-4 d-none d-md-block">
+                          <img
+                            src="/static/img/sidenav2.jpg"
+                            alt="login form"
+                            class="img-fluid"
+                            style="border-top-left-radius: 1rem; border-bottom-left-radius: 1rem; height: 100%;"
+                          >
+
+                          
+                        </div>
+                        <div class="col-md-8 d-flex align-items-center">
+                          <div class="card-body py-5 px-4 p-md-5">
+
+                            <form method="post" action="">
+                              {% csrf_token %}
+                                <h4 class="fw-bold mb-4 text-center" style="color: #92aad0;">Signup for an account</h4>
+                                <p class="mb-4 text-center" style="color: #45526e;">To sign up, please fill in these input fiels with the neccessary credentials.</p>
+
+                                <div class="row">
+                                  <div class="col-md-6 mb-4">
+                
+                                    <div class="form-outline">
+                                      {{ form.username }}
+                                      <label class="form-label" for="Username">Username</label>
+                                    </div>
+                    
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                    
+                                    <div class="form-outline">
+                                      {{ form.email }}
+                                      <label class="form-label" for="Email">Email address</label>
+                                    </div>
+                
+                                  </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                  <div class="col">
+                                    <div class="form-outline">
+                                    {{ form.first_name }}
+                                      <label class="form-label" for="FirstName">First name</label>
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-outline">
+                                      {{ form.last_name }}
+                                      <label class="form-label" for="LastName">Last name</label>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="form-outline mb-4">
+                                {{ form.password1 }}
+                                <label class="form-label" for="Password1">Password</label>
+                              </div>
+        
+                              <div class="form-outline mb-4">
+                                {{ form.password2 }}
+                                <label class="form-label" for="Password2">Repeat Password</label>
+                              </div>
+        
+                              <div class="d-flex justify-content-end pt-1 mb-4">
+                                <button class="btn btn-primary btn-rounded" type="submit" style="background-color: #92aad0;">Sign Up</button>
+                              </div>
+                              <hr>
+                              <a class="link text-center" href="{% url 'core:signin' %}">Already Have An Account? Sign In.</a>
+                            </form>
+        
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Get a Quote Section -->
+
+  </main><!-- End #main -->
+{% endblock %}

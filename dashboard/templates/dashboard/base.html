@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Dashboard | {% block title %} {% endblock %}</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon" />
+    <link
+      href="{% static 'img/apple-touch-icon.png' %}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet" />
+    <link
+      href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/fontawesome-free/css/all.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/glightbox/css/glightbox.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/swiper/swiper-bundle.min.css' %}"
+      rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'vendor/md/css/mdb.min.css' %}" />
+    {% endcomment %}
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <style>
+      /* Scroll Bar */
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: white;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgb(90, 89, 89);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(136, 135, 135);
+      }
+      body {
+        background-color: #f8f8f8;
+      }
+      nav {
+        background-color: transparent;
+        margin-top: 10px;
+      }
+      .siddd {
+        background-color: rgba(53, 52, 52, 0.795);
+        margin-left: -100px;
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+      }
+      .bi-list-nested,
+      .bi-list {
+        cursor: pointer;
+        font-size: larger;
+      }
+      .bi-list-nested {
+        display: none;
+      }
+      .iconss {
+        font-size: 30px;
+        background-color: rgb(69, 69, 228);
+        border-radius: 20px 8px 8px 8px;
+      }
+      
+      .msgsx {
+        position: absolute;
+        right: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+
+    <nav class="navbar">
+      <div class="container-fluid">
+        <div
+          class="d-flex"
+          style="align-items: center; justify-content: center"
+        >
+          <a href="{% url 'core:index' %}" class="navbar-brand"
+            ><h3>Brand Nova</h3></a
+          >
+          <i class="bi bi-list"></i>
+          <i class="bi bi-list-nested"></i>
+        </div>
+
+        <div class="d-flex">
+          
+          <!-- End Messages Nav -->
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <main style="display: flex; flex-direction: row">
+      <div class="sidebar d-flex">
+        <div
+          class="d-flex flex-column flex-shrink-0 siddd"
+          style="width: 4.5rem"
+        >
+          <a
+            href="{% url 'core:index' %}"
+            class="d-block p-3 link-body-emphasis text-decoration-none"
+            title="Home"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <img
+              src="/static/img/BN.png"
+              alt="mdo"
+              width="30"
+              height="30"
+              class="rounded-circle"
+            />
+            <span class="visually-hidden">Home</span>
+          </a>
+          <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+              <a
+                href="{% url 'dashboard:index' %}"
+                class="nav-link py-3 border-bottom rounded-0"
+                title="Home"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+              >
+                <i class="bi bi-house-door me-2"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'dashboard:dashboard' %}"
+                class="nav-link py-3 border-bottom rounded-0"
+                title="Dashboard"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+              >
+                <i class="bi bi-columns-gap me-2"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="nav-link py-3 border-bottom rounded-0"
+                title="Products"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+              >
+                <i class="bi bi-window-split me-2"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'dashboard:products' %}"
+                class="nav-link py-3 border-bottom rounded-0"
+                title="Posts"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+              >
+                <i class="bi bi-microsoft me-2"></i>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'dashboard:profile' %}"
+                class="nav-link py-3 border-bottom rounded-0"
+                title="Profile"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+              >
+                <i class="fa-regular fa-user"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="dropdown border-top">
+            <a
+              href="#"
+              class="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="{{ profile.image.url }}"
+                alt="img"
+                width="24"
+                height="24"
+                class="rounded-circle"
+              />
+            </a>
+            <ul class="dropdown-menu text-small shadow">
+              <li>
+                <a class="dropdown-item" href="{% url 'items:new' %}"
+                  >New Post</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <form action="{% url 'core:logout' %}" method="post">
+                  {% csrf_token %}
+                  <button class="dropdown-item" type="submit">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content d-flex" style="width: 100%">
+        <div class="container">{% block content %} {% endblock %}</div>
+      </div>
+    </main>
+    <!-- End Header -->
+    <!-- Start Page  -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a
+              href="{% url 'core:index' %}"
+              class="logo d-flex align-items-center"
+            >
+              <span>BRAND NOVA</span>
+            </a>
+            <p class="text-center">
+              Welcome to Brand Nova, your ultimate destination for all things web. We specialize in delivering innovative web design templates, engaging tutorials, and a dynamic online community platform.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-4">
+        <div class="copyright">
+          &copy; Copyright <strong><span>BRAND NOVA</span></strong
+          >. All Rights Reserved
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <div id="preloader"></div>
+
+    <!-- End Page  -->
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- MDB -->
+    {% comment %}
+    <script
+      type="text/javascript"
+      src="{% static 'vendor/md/js/mdb.min.js' %}"
+    ></script>
+    {% endcomment %}
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Chart Js -->
+    <script src="{% static 'js/chart.js' %}"></script>
+
+    <!-- J Queery -->
+    <script src="{% static 'js\jquery-3.7.1.min.js' %}"></script>
+
+    <script>
+      $(document).ready(function () {
+        $(".nav-link").click(function () {
+          $(this).toggleClass("active");
+        });
+      
+        $(".bi-list").click(function () {
+          $(this).hide();
+          $(".bi-list-nested").css("display", "block");
+          $(".siddd").css("margin-left", "10px");
+        });
+      
+        $(".bi-list-nested").click(function () {
+          $(this).hide();
+          $(".bi-list").css("display", "block");
+          $(".siddd").css("margin-left", "-100px");
+        });
+      
+        // messages dropdown
+      
+        $(".msgsi").click(function () {
+          $(".msgs").toggleClass("d-none");
+        });
+      
+        $(".msgsx").click(function () {
+          $(".msgs").hide();
+        });
+      });
+      
+    </script>
+  </body>
+</html>

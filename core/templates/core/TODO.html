@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+
+{% block title %}TODO{% endblock %}
+
+{% block content %}
+    <div class="section-header" style=" margin-top:70px;">
+        <span>{{title}}</span>
+        <h2>{{title}}</h2>
+    </div>
+    
+    <section>
+        <div class="container">
+            <div class="card">
+               
+                {% if request.user.is_authenticated %}
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% if todos %}  
+                                {% for todo in todos %}  
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ todo.content }}
+                                        {% if todo.tag == 'Pending' %}
+                                            <span class="badge bg-warning rounded-pill">{{ todo.tag }}</span>
+                                        {% else %}
+                                            <span class="badge bg-success rounded-pill">{{ todo.tag }}</span>
+                                        {% endif %}
+                                        <div class="mx-2 ">
+                                            <div class="pt-2">
+                                                <a href="{% url 'core:edit_todo' pk=todo.id %}" class="btn btn-primary btn-sm m-1"><i class="bi bi-pencil-square"></i></a>
+
+                                                <form method="post" action="{% url 'core:delete' pk=todo.id %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger btn-sm m-1"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                
+                            {% else %}
+                                <p>You do not have any todo items.</p>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <p>Please login to view your Todo List.</p>
+                {% endif %}
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="p-0 mt-5">
+        <div class="container m-auto">
+            <form action="." method="POST" class="form-group">
+                {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    <div class="form-outline my-4">
+                        {{ form.non_field_errors }}
+                        {{ form.content.errors }}  
+                        <div class="form-group my-2">
+                            <label for="content">Content:</label>
+                            {{ form.content }}
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="tag">Tag:</label>
+                            {{ form.tag }}
+                        </div>
+                        
+                    </div>
+                    <p style="display: flex; width: 100%; justify-content: end;">
+                        <button type="submit" class="btn btn-warning">Submit</button>
+                    </p>
+                {% else %}
+                    <p style="display: flex; width: 100%; justify-content: end;">
+                        <a href="{% url 'core:signin' %}" class="btn btn-warning">Sign in to Create Todo</a>
+                    </p>
+                {% endif %}
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('/static/img/page-header.jpg');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Contact</h2>
+              <p>
+                Use the Contact Us form to reach out to an admin, make a specific request or hire a professional for a job. You can request for information to be added to or removed from your profile. Feel free to use the contact form with discresion.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'core:index' %}">Home</a></li>
+            <li>Contact</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Breadcrumbs -->
+
+    <div class="section-header">
+      <span>{{title}}</span>
+      <h2>{{title}}</h2>
+    </div>
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3969.4568156127393!2d6.104220375107262!3d5.790964131241992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNcKwNDcnMjcuNSJOIDbCsDA2JzI0LjUiRQ!5e0!3m2!1sen!2sng!4v1702410095274!5m2!1sen!2sng" width="100%" height="340px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div><!-- End Google Maps -->
+
+        <div class="row gy-4 mt-4">
+          
+
+          <div class="container text-center my-3">
+            <h2>Contact Us or Leave a Message</h2>
+          </div>
+
+          <div class="col-lg-4">
+
+            {% for cons in cons %}
+              <div class="info-item d-flex">
+                {{ cons.icon|safe }}
+                <div>
+                  <h4>{{ cons.name }}:</h4>
+                  <p>{{ cons.content }}</p>
+                </div>
+              </div>
+            {% endfor %}
+
+           <!-- End Info Item -->
+
+          </div>
+
+          <div class="col-lg-8">
+            <form action="" method="post" class="php-email-form">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  {{ form.name }}
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  {{ form.email }}
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                {{ form.subject }}
+              </div>
+              <div class="form-group mt-3">
+                {{ form.message }}
+              </div>
+              <div class="my-3">
+                {% if form.errors or form.non_field_errors %}
+                  <div class="alert alert-warning alert-dismissible fade show p-2" role="alert">
+                  <p class="text-center" style="list-style:none;">
+                      {% for field in form %}
+                          <p>
+                            {{ field.errors }}
+                          </p>
+                      {% endfor %}
+                      {{ form.non_field_errors }}
+                  </p>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="text-center">
+                {% if request.user.is_authenticated %}
+                  <button type="submit">Send Message</button>
+                {% else %}
+                  <a href="{% url 'core:signin' %}" class="btn btn-primary">Sign in to Leave a message</a>
+                {% endif %}
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+ {% endblock %}

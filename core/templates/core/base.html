@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Fresh | {% block title %} {% endblock %}</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon" />
+    <link
+      href="{% static 'img/apple-touch-icon.png' %}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet" />
+    <link
+      href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/fontawesome-free/css/all.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/glightbox/css/glightbox.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'vendor/swiper/swiper-bundle.min.css' %}"
+      rel="stylesheet"
+    />
+
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'vendor/md/css/mdb.min.css' %}" />
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+    
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+
+    <header
+      id="header"
+      class="header d-flex align-items-center fixed-top w-75 m-auto bg-light mt-4 bg-opacity-75 p-1"
+    >
+      <div class="container p-0 w-100">
+        <nav class="navbar">
+          <div class="logg">
+            <div class="logg1">
+              <a
+                href="{% url 'core:index' %}"
+                class="logo d-flex align-items-center"
+              >
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1>BRAND NOVA</h1>
+              </a>
+            </div>
+
+            <div class="logg2">
+              <span class="n-t1"><i class="bi bi-list"></i></span>
+              <span class="n-t2"><i class="bi bi-x"></i></span>
+            </div>
+          </div>
+          <ul class="n-list justify-content-end px-3">
+            <li><a href="{% url 'core:index' %}" class="active">Home</a></li>
+            <li><a href="{% url 'core:about' %}">About</a></li>
+            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+            <li><a href="{% url 'core:pricing' %}">Pricing</a></li>
+            <li class="dropdown">
+              <a href="#!"
+                ><span>Drop Down</span>
+                <i class="bi bi-chevron-down dropdown-indicator"></i
+              ></a>
+              <ul style="width: auto">
+
+                <li><a href="
+                  {% if request.user.is_authenticated %}
+                    {% url 'core:todo' %}
+                  {% else %}
+                    {% url 'core:signin' %}
+                  {% endif %}
+                  ">Todo List</a></li>
+                <li><a href="#">Drop Down 2</a></li>
+                <li><a href="{% url 'core:terms' %}">Terms and Conditions</a></li>
+                <li><a href="{% url 'core:privacy' %}">Privacy and Security</a></li>
+              </ul>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="p-0">
+              <a
+                class="bg-success get-a-quote"
+                href="{% url 'dashboard:index' %}"
+                >Dashboard</a
+              >
+            </li>
+            {% else %}
+            <li class="p-0">
+              <a class="get-a-quote" href="{% url 'core:signup' %}"
+                >Register With Us</a
+              >
+            </li>
+            <li class="p-0">
+              <a class="bg-success get-a-quote" href="{% url 'core:signin' %}"
+                >Login</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+        <!-- .navbar -->
+      </div>
+      <style>
+        
+        .bonus_area
+        {
+            position: fixed;
+        top: 50%;
+        right: 0;
+        width: 180px;
+        border-radius: 5px 0 0 5px;
+        z-index: 99999998;
+        -webkit-transform: translateY(-50%) translateX(100%);
+        -ms-transform: translateY(-50%) translateX(100%);
+        transform: translateY(-50%) translateX(100%);
+        -webkit-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+        }
+        .bonus_area.show
+        {
+            -webkit-transform: translateY(-50%) translateX(0%);
+        -ms-transform: translateY(-50%) translateX(0%);
+        transform: translateY(-50%) translateX(0%);
+        -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        }
+        .bonus_area .inner_area
+        {
+            background: -webkit-gradient(linear, left top, left bottom, from(#202b47), to(#5846f9));
+        background: -webkit-linear-gradient(top, #202b47 0%, #5846f9 100%);
+        background: -o-linear-gradient(top, #202b47 0%, #5846f9 100%);
+        background: linear-gradient(to bottom, #5846f9 0%, #202b47 100%);
+        border-radius: 5px 0 0 0;
+        padding: 18px 0 23px;
+        position: relative;
+        text-align: center;
+        }
+        .bonus_area .inner_area .icon
+        {
+            display: block;
+        padding-left: 33px;
+        margin-bottom: 15px;
+        text-align: left;
+        }
+        .inner_area .close-btn 
+        {
+            position: absolute;
+
+        height: 20px;
+        background: none;
+        outline: none;
+        border: none;
+        z-index: 30;
+        top: 28px;
+        width: 10px;
+        height: 15px;
+        right: 20px;
+        }
+        hr{
+          color: wheat;
+        }
+
+      </style>
+    </header>
+    <!-- End Header -->
+    <!-- End Header -->
+    <!-- Start Page  -->
+
+    {% block content %} {% endblock %}
+
+    <div class="bonus_area rounded-lg">
+      <div class="inner_area">
+          <button class="global-close-btn close-btn" data-dismiss="modal">
+            <i class="bi bi-x-lg text-light" style="font-size: 10px;"></i>
+          </button>
+          <div class="icon">
+            <i class="bi bi-code-slash text-light" style="font-size: 30px;"></i>
+          </div>
+          <h4 class="mt-5 text-white"><strong>JOIN US</strong></h4>
+          <p class="subtitle text-white">And get access to free coding tutorials and many more related content.</p>
+          <hr>
+          <a href="https://justmarkettrades.com/register" class="get-btn text-light" style="text-decoration: none;">Register Now</a>
+      </div>
+    </div>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a
+              href="{% url 'core:index' %}"
+              class="logo d-flex align-items-center"
+            >
+              <span>BRAND NOVA</span>
+            </a>
+            <p class="text-center">
+              Welcome to Brand Nova, your ultimate destination for all things web. We specialize in delivering innovative web design templates, engaging tutorials, and a dynamic online community platform.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-4">
+        <div class="copyright">
+          &copy; Copyright <strong><span>BRAND NOVA</span></strong
+          >. All Rights Reserved
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <div id="preloader"></div>
+
+    <!-- End Page  -->
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- MDB -->
+    <script
+      type="text/javascript"
+      src="{% static 'vendor/md/js/mdb.min.js' %}"
+    ></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Chart Js -->
+    <script src="{% static 'js/chart.js' %}"></script>
+
+    <!-- J Queery -->
+    <script src="{% static 'js\jquery-3.7.1.min.js' %}"></script>
+
+    <script>
+
+      $(document).ready(function () {
+        
+        //Navbar
+
+        $(".n-t1").click(function () {
+          $(this).hide();
+          $(".n-t2").show();
+          $(".navbar").css("height", "500px");
+        });
+
+        $(".n-t2").click(function () {
+          $(this).hide();
+          $(".n-t1").show();
+          $(".navbar").css("height", "60px");
+        });
+
+        $(".dropdown").click(function () {
+          $(".dropdown ul").toggle();
+        });
+
+        $(".flip").click(function(){
+          $(".panel").slideToggle("slow");
+        });
+
+
+        //side notification
+
+        setTimeout(function() {
+          $(".bonus_area").addClass("show");
+        }, 5000);
+  
+        $(".close-btn").click(function() {
+          $(".bonus_area").removeClass("show");
+        });
+
+
+
+
+      });
+    </script>
+  </body>
+</html>

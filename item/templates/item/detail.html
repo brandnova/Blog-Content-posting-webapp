@@ -1,0 +1,225 @@
+{% extends 'core/base.html' %}
+
+{% load hitcount_tags %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('/static/img/page-header.jpg');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Details</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="container">
+          <ol>
+            <li><a href="{% url 'core:index' %}">Home</a></li>
+            <li>Details</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Service Details Section ======= -->
+    <section id="service-details" class="service-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <h4>View Similar Uploads</h4>
+
+            <div class="services-list" style="height:300px; width:300px; overflow-y:scroll;">
+              {% for item in related_items %}
+              <a href="{% url 'items:detail' item.id %}">{{ item.name }}</a>
+              {% endfor %}
+            </div>
+
+            <p class="text-center">
+             <div class="card p-3">
+              Here is a list of other uploads under similar category. You can browse the list to see other interesting uploads.
+             </div>
+
+            </p>
+          </div>
+
+          
+
+          <div class="col-lg-8">
+            <img src="
+              {% if item.image %}
+                {{ item.image.url }}
+              {% else %}
+                #
+              {% endif %}
+              " alt="" class="img-fluid services-img rounded" style=" width:60%;">
+
+            <h3>{{ item.name }}</h3>
+            <p>
+              -- <i>{{ item.description }}</i> --
+            </p>
+            {% if item.content %}
+            <p>
+              {{ item.content|safe }}
+            </p>
+            {% else %}
+            <p>
+              <div class="text-center container">
+                <I class="p-2 rounded bg-danger bg-opacity-25 shadow ">
+                  <b>There's no further content on this upload, leave a comment to share your opinion on the post.</b>
+                </i>
+              </div>
+            </p>
+            {% endif %}
+          </div>
+
+          {% if item.video %}
+            <video class="embed-responsive embed-responsive-16by9" controls="controls">
+              <source src="{{ item.video.url }}" type="video/mp4">
+            </video>
+
+          {% endif %}
+
+          <div class="d-flex" style="flex-direction: row;">
+            <ul>
+              {% if request.user == item.created_by %}
+              <li>
+                <div id="liveAlertPlaceholder" class=" d-flex"></div>
+  
+              </li>
+              <li><i class="bi bi-check-circle"></i>
+                <span>Posted By: </span ><i> You</i>
+  
+                <button type="button" class="btn btn-danger me-3" id="liveAlertBtn">Delete</button>
+  
+                <a href="{% url 'items:edit' item.id %}" class="btn btn-success">Edit</a>
+              </li>
+              {% else %}
+              <li><i class="bi bi-check-circle"></i>
+                <span>Posted By: </span> <i> {{ item.created_by }}</i>
+              </li>
+              
+              {% endif %}
+              <li><i class="bi bi-clock"></i>
+                <span>Posted At: </span> <i> {{ item.created_at }}</i>
+              </li>
+              <li><i class="bi bi-eye"></i>
+                <span>Views: </span><div> <i>{% get_hit_count for item %}</i> Views</div> 
+              </li>
+            </ul>
+              {% if user.is_authenticated %}
+                {% if item.file %}
+                <div class="card p-3 ms-auto">
+                  <h3 class="text-dark">Downloadable File</h3>
+                  <div class="card-body text-center" style="font-size: larger;">
+                    <a href="{% if item.file %} {{ item.file.url }} {% else %} # {% endif %}" download class="btn-visit align-self-start"><i class="btn text-primary bi bi-download"></i></a>
+                  </div>
+                </div>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'core:signin' %}" class="btn-visit align-self-start">Signin to Download</a>   
+              {% endif %}
+          </div>
+          
+        </div>
+
+        <h2>Comments</h2>
+
+        {% if item.comments.all %}
+            {% for comment in item.comments.all %}
+                {% if request.user == comment.name %}
+                  <div class="container my-3">
+                    <div class="card">
+                      <div class="card-header bg-warning bg-opacity-50" style="display: flex; justify-content: end;">
+                        <b>{{ comment.name }} 
+                          {% if badge %}
+                            {{ profile.badge|safe }}
+                          {% endif %}
+                        </b>
+                      </div>
+                      <div class="card-body bg-secondary" style="display: flex; justify-content: end;">
+                        {{ comment.body }}
+                      </div>
+                    </div>
+                    <small class="me-5 " style="display: flex; justify-content: end;"><i>{{ comment.posted_at }}</i></small>
+                  </div>
+                {% else %}
+                  <div class="container my-3">
+                    <div class="card">
+                      <div class="card-header bg-primary bg-opacity-50">
+                        <b>{{ comment.name }} 
+                          {% if profile.badge %}
+                            {{ profile.badge|safe }}
+                          {% endif %}
+                        </b>
+                      </div>
+                      <div class="card-body bg-secondary">
+                        {{ comment.body }}
+                      </div>
+                    </div>
+                    <small class="ms-5"><i>{{ comment.posted_at }}</i></small>
+                  </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p class="my-3">
+              No Comments...
+            </p>
+        {% endif %}
+
+        <div class="container">
+          <form action="." method="POST" class="form-group">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+              <div class="form-outline my-4">
+                {{ form.non_field_errors }}
+                {{ form.body.errors }}
+                {{ form.body }}
+              </div>
+              <p style=" display: flex; width: 100%; justify-content: end;">
+                <button type="submit" class="btn btn-warning">Comment</button>
+              </p>
+            {% else %}
+              <p style="display: flex; width: 100%; justify-content: end;">
+                <a href="{% url 'core:signin' %}" class="btn btn-warning">Sign in to Comment</a>
+              </p>
+            {% endif %}
+          </form>
+        </div>
+
+
+
+    <script>
+      const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+      const appendAlert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          '</div>'
+        ].join('')
+
+        alertPlaceholder.append(wrapper)
+      }
+
+      const alertTrigger = document.getElementById('liveAlertBtn')
+      if (alertTrigger) {
+        alertTrigger.addEventListener('click', () => {
+          appendAlert('<h5>Are you sure you want to delete this post?</h5> <a href="{% url 'items:delete' item.id %}" class="btn btn-danger">Delete</a>', 'danger')
+        })
+      }
+    </script>
+
+  </main><!-- End #main -->
+
+  {% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+    <span>{{title}}</span>
+    <h2>{{title}}</h2>
+</div>
+
+
+<section id="get-a-quote" class="get-a-quote p-5 d-flex">
+    <div class="container" data-aos="fade-up">
+        <div class="row g-0 p-3 rounded mem">
+
+            {% if form.errors or form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible fade show p-2" role="alert">
+                <p class="text-center" style="list-style:none;">
+                    {% for field in form %}
+                        <p>
+                        {{ field.errors }}
+                        </p>
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                </p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+
+
+            <!-- Profile Edit Form -->
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+                    {% if profile.image %}
+                        <img src="{{ profile.image.url }}" alt="Profile image" class="img-fluid m-3" width="200" height="200">
+                        {% comment %} <div class="my-2">
+                            <form method="post" action="{% url 'dashboard:detail' pk=image.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm m-1"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div> {% endcomment %}
+                    {% else %}
+                        No Profile image.
+                    {% endif %}
+                    
+                    {{ form.image }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="username" class="col-md-4 col-lg-3 col-form-label">Username</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ user_form.username }}
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label">bio</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.bio }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="f_name" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ user_form.first_name }}
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="l_name" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ user_form.last_name }}
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ user_form.email }}
+
+                    </div>
+                </div>
+
+                {% comment %} <div class="row mb-3">
+                    <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                    </div>
+                </div> {% endcomment %}
+
+                <div class="row mb-3">
+                    <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ form.job }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ form.country }}
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ form.address }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                    <div class="col-md-8 col-lg-9">
+                    {{ form.phone }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+            <!-- End Profile Edit Form -->
+
+        </div>
+    </div>
+  </section>
+
+{% endblock %}
